@@ -1,27 +1,208 @@
 <template>
   <div class="layout">
-    <header class="header">
-      <strong>
-        <g-link to="/">{{ $static.metadata.siteName }}</g-link>
-      </strong>
-      <nav class="nav">
-        <g-link class="nav__link" to="/">Home</g-link>
-        <g-link class="nav__link" to="/about/">About</g-link>
-        <g-link class="nav__link" to="/posts1/">posts1</g-link>
-        <g-link class="nav__link" to="/posts2/">posts2</g-link>
-      </nav>
-    </header>
+    <section
+      class="page-header"
+      style="
+        background-image: linear-gradient(
+          120deg,
+          rgb(38, 144, 249),
+          rgb(252, 45, 45)
+        );
+        color: rgb(255, 255, 255);
+      "
+    >
+      <h1 class="project-name">zzy的VBlog</h1>
+      <h2 class="project-tagline">欢迎来到zzy的VBlog</h2>
+    </section>
+    <div
+      style="
+        position: relative;
+        z-index: 2;
+        margin: auto;
+        margin-top: -30px;
+        width: 64rem;
+      "
+    >
+      <!-- <el-card shadow="never" :body-style="{ padding: '0px' }">
+        <el-row>
+          <el-col :span="10">
+            <el-menu
+              @select="selectTopbar"
+              :default-active="topbar.active"
+              mode="horizontal"
+              menu-trigger="click"
+            >
+              <el-submenu index="#more">
+                <template slot="title">了解博主</template>
+                <el-menu-item index="#githubHome">github主页</el-menu-item>
+                <el-menu-item index="#blog">其他博客</el-menu-item>
+              </el-submenu>
+              <el-submenu index="#webSites" v-if="webSites.length > 0">
+                <template slot="title">其他网站</template>
+                <el-menu-item
+                  :index="'#webSites-' + index"
+                  v-for="(item, index) in webSites"
+                  :key="'#webSites' + index"
+                  >{{ item.name }}</el-menu-item
+                >
+              </el-submenu>
+            </el-menu>
+          </el-col>
+          <el-col
+            :span="8"
+            style="text-align: center; padding: 12px 0px 0px 10px"
+          >
+            <el-row>
+              <el-col :span="4">
+                <el-popover placement="top" trigger="hover">
+                  <div style="text-align: center">
+                    <el-progress
+                      color="#67C23A"
+                      type="circle"
+                      :percentage="music.volume"
+                    ></el-progress>
+                    <br />
+                    <el-button
+                      @click="changeVolume(-10)"
+                      icon="el-icon-minus"
+                      circle
+                    ></el-button>
+                    <el-button
+                      @click="changeVolume(10)"
+                      icon="el-icon-plus"
+                      circle
+                    ></el-button>
+                  </div>
+
+                  <el-button
+                    @click="play"
+                    id="play"
+                    slot="reference"
+                    :icon="
+                      music.isPlay ? 'el-icon-refresh' : 'el-icon-caret-right'
+                    "
+                    circle
+                  ></el-button>
+                </el-popover>
+              </el-col>
+              <el-col :span="14" style="padding-left: 20px">
+                <el-slider
+                  @change="changeTime"
+                  :format-tooltip="$util.formatTime"
+                  :max="music.maxTime"
+                  v-model="music.currentTime"
+                  style="width: 100%"
+                ></el-slider>
+              </el-col>
+              <el-col
+                :span="6"
+                style="
+                  padding: 9px 0px 0px 10px;
+                  color: #909399;
+                  font-size: 13px;
+                "
+              >
+                {{ $util.formatTime(music.currentTime) }}/{{
+                  $util.formatTime(music.maxTime)
+                }}
+              </el-col>
+            </el-row>
+
+            <audio ref="music" loop autoplay v-if="audioAutoPlay">
+              <source :src="audioUrl" type="audio/mpeg" />
+            </audio>
+            <audio ref="music" loop v-else>
+              <source :src="audioUrl" type="audio/mpeg" />
+            </audio>
+          </el-col>
+          <el-col :span="4" style="text-align: right">
+            <div style="font-size: 20px; color: #606266; margin-top: 5px">
+              <b>{{ githubUsername }}</b>
+            </div>
+            <div style="color: #606266">
+              <i class="el-icon-location"></i>&nbsp;{{
+                location ? location : "未填写地址"
+              }}
+              <br />
+            </div>
+          </el-col>
+          <el-col :span="2" style="text-align: center">
+            <img
+              v-popover:bigAvatar
+              :src="avatarUrl"
+              style="
+                margin-top: 4px;
+                margin-right: 10px;
+                width: 52px;
+                height: 52px;
+                border-radius: 5px;
+                border: 1px solid #ebeef5;
+              "
+            />
+            <el-popover
+              ref="bigAvatar"
+              placement="top-start"
+              :title="githubUsername"
+              width="200"
+              trigger="hover"
+            >
+              <i class="el-icon-star-on"></i>&emsp;{{ name }}
+              <br />
+              <i class="el-icon-location"></i>&emsp;{{ location }}
+              <br />
+              <img :src="avatarUrl" style="width: 200px; height: 200px" />
+            </el-popover>
+          </el-col>
+        </el-row>
+      </el-card> -->
+    </div>
     <slot />
   </div>
 </template>
 
-<static-query>
-query {
-  metadata {
-    siteName
-  }
-}
-</static-query>
+<script>
+export default {
+  name: "index",
+  data() {
+    return {
+      topbar: {
+        active: "",
+        webSites: [],
+      },
+    };
+  },
+  methods: {
+    selectTopbar(index) {
+      //取消菜单选中状态
+      this.topbar.active = this.topbar.active == "" ? " " : "";
+      switch (index) {
+        case "#githubHome":
+          window.open("https://github.com/" + this.githubUsername);
+          break;
+        case "#blog":
+          if (this.blog) {
+            window.open(
+              (this.blog.match(/https?:\/\//i) ? "" : "https://") + this.blog
+            );
+          } else {
+            this.$message({
+              message: "博主没有其他博客",
+              type: "info",
+            });
+          }
+          break;
+        default:
+          if (/#webSites-\d+/.test(index)) {
+            let i = parseInt(index.split("-")[1]);
+            let url = this.webSites[i].url;
+            window.open((url.match(/https?:\/\//i) ? "" : "https://") + url);
+          }
+          break;
+      }
+    },
+  },
+};
+</script>
 
 <style>
 body {
@@ -32,22 +213,79 @@ body {
   /* line-height: 1.5; */
 }
 
-.layout {
-  max-width: 760px;
+.page-header {
+  padding: 5rem 6rem;
+  color: #fff;
+  text-align: center;
+  background-color: #159957;
+  background-image: linear-gradient(120deg, #155799, #159957);
+}
+
+.project-name {
+  font-size: 3.25rem;
+  margin-top: 0;
+  margin-bottom: 0.1rem;
+}
+
+.project-tagline {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  font-weight: normal;
+  opacity: 0.7;
+}
+
+.btn:hover {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:active,
+a:hover {
+  outline: 0;
+}
+
+.btn {
+  padding: 0.75rem 1rem;
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 0.3rem;
+  transition: color 0.2s, background-color 0.2s, border-color 0.2s;
+}
+
+a {
+  color: #1e6bb8;
+  text-decoration: none;
+}
+
+.btn + .btn {
+  margin-left: 1rem;
+}
+
+.main-content {
+  max-width: 64rem;
+  padding: 30px 0px 30px 0px;
   margin: 0 auto;
-  padding-left: 20px;
-  padding-right: 20px;
+  font-size: 1.1rem;
+  word-wrap: break-word;
+  min-height: 800px;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  height: 80px;
-}
-
-.nav__link {
-  margin-left: 20px;
+.foot {
+  max-width: 67rem;
+  margin: 0 auto;
+  font-size: 12px !important;
+  color: #586069 !important;
+  word-wrap: break-word;
 }
 </style>
