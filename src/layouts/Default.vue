@@ -1,162 +1,29 @@
 <template>
   <div class="layout">
-    <section
-      class="page-header"
-      style="
-        background-image: linear-gradient(
-          120deg,
-          rgb(38, 144, 249),
-          rgb(252, 45, 45)
-        );
-        color: rgb(255, 255, 255);
-      "
-    >
-      <h1 class="project-name">zzy的VBlog</h1>
-      <h2 class="project-tagline">欢迎来到zzy的VBlog</h2>
-    </section>
-    <div
-      style="
-        position: relative;
-        z-index: 2;
-        margin: auto;
-        margin-top: -30px;
-        width: 64rem;
-      "
-    >
-      <!-- <el-card shadow="never" :body-style="{ padding: '0px' }">
-        <el-row>
-          <el-col :span="10">
-            <el-menu
-              @select="selectTopbar"
-              :default-active="topbar.active"
-              mode="horizontal"
-              menu-trigger="click"
-            >
-              <el-submenu index="#more">
-                <template slot="title">了解博主</template>
-                <el-menu-item index="#githubHome">github主页</el-menu-item>
-                <el-menu-item index="#blog">其他博客</el-menu-item>
-              </el-submenu>
-              <el-submenu index="#webSites" v-if="webSites.length > 0">
-                <template slot="title">其他网站</template>
-                <el-menu-item
-                  :index="'#webSites-' + index"
-                  v-for="(item, index) in webSites"
-                  :key="'#webSites' + index"
-                  >{{ item.name }}</el-menu-item
-                >
-              </el-submenu>
-            </el-menu>
-          </el-col>
-          <el-col
-            :span="8"
-            style="text-align: center; padding: 12px 0px 0px 10px"
-          >
-            <el-row>
-              <el-col :span="4">
-                <el-popover placement="top" trigger="hover">
-                  <div style="text-align: center">
-                    <el-progress
-                      color="#67C23A"
-                      type="circle"
-                      :percentage="music.volume"
-                    ></el-progress>
-                    <br />
-                    <el-button
-                      @click="changeVolume(-10)"
-                      icon="el-icon-minus"
-                      circle
-                    ></el-button>
-                    <el-button
-                      @click="changeVolume(10)"
-                      icon="el-icon-plus"
-                      circle
-                    ></el-button>
-                  </div>
+    <header class="header sticky">
+      <div class="container">
+        <div class="left">
+          <a href="/" aria-current="page" class="home-link active--exact active"
+            ><img
+              src="/img/logo.332701b7.svg"
+              alt="Nichlas W. Andersen"
+              class="logo"
+          /></a>
+        </div>
+        <nav class="nav right">
+          <a href="/journal" class="nav__link">Journal</a
+          ><a href="/contact" class="nav__link">Say Hi!</a>
+        </nav>
+      </div>
+    </header>
 
-                  <el-button
-                    @click="play"
-                    id="play"
-                    slot="reference"
-                    :icon="
-                      music.isPlay ? 'el-icon-refresh' : 'el-icon-caret-right'
-                    "
-                    circle
-                  ></el-button>
-                </el-popover>
-              </el-col>
-              <el-col :span="14" style="padding-left: 20px">
-                <el-slider
-                  @change="changeTime"
-                  :format-tooltip="$util.formatTime"
-                  :max="music.maxTime"
-                  v-model="music.currentTime"
-                  style="width: 100%"
-                ></el-slider>
-              </el-col>
-              <el-col
-                :span="6"
-                style="
-                  padding: 9px 0px 0px 10px;
-                  color: #909399;
-                  font-size: 13px;
-                "
-              >
-                {{ $util.formatTime(music.currentTime) }}/{{
-                  $util.formatTime(music.maxTime)
-                }}
-              </el-col>
-            </el-row>
-
-            <audio ref="music" loop autoplay v-if="audioAutoPlay">
-              <source :src="audioUrl" type="audio/mpeg" />
-            </audio>
-            <audio ref="music" loop v-else>
-              <source :src="audioUrl" type="audio/mpeg" />
-            </audio>
-          </el-col>
-          <el-col :span="4" style="text-align: right">
-            <div style="font-size: 20px; color: #606266; margin-top: 5px">
-              <b>{{ githubUsername }}</b>
-            </div>
-            <div style="color: #606266">
-              <i class="el-icon-location"></i>&nbsp;{{
-                location ? location : "未填写地址"
-              }}
-              <br />
-            </div>
-          </el-col>
-          <el-col :span="2" style="text-align: center">
-            <img
-              v-popover:bigAvatar
-              :src="avatarUrl"
-              style="
-                margin-top: 4px;
-                margin-right: 10px;
-                width: 52px;
-                height: 52px;
-                border-radius: 5px;
-                border: 1px solid #ebeef5;
-              "
-            />
-            <el-popover
-              ref="bigAvatar"
-              placement="top-start"
-              :title="githubUsername"
-              width="200"
-              trigger="hover"
-            >
-              <i class="el-icon-star-on"></i>&emsp;{{ name }}
-              <br />
-              <i class="el-icon-location"></i>&emsp;{{ location }}
-              <br />
-              <img :src="avatarUrl" style="width: 200px; height: 200px" />
-            </el-popover>
-          </el-col>
-        </el-row>
-      </el-card> -->
-    </div>
     <slot />
+
+    <footer class="footer">
+      <div class="container">
+        <span>Copyright zzy © 2021</span>
+      </div>
+    </footer>
   </div>
 </template>
 
@@ -164,128 +31,541 @@
 export default {
   name: "index",
   data() {
-    return {
-      topbar: {
-        active: "",
-        webSites: [],
-      },
-    };
+    return {};
   },
-  methods: {
-    selectTopbar(index) {
-      //取消菜单选中状态
-      this.topbar.active = this.topbar.active == "" ? " " : "";
-      switch (index) {
-        case "#githubHome":
-          window.open("https://github.com/" + this.githubUsername);
-          break;
-        case "#blog":
-          if (this.blog) {
-            window.open(
-              (this.blog.match(/https?:\/\//i) ? "" : "https://") + this.blog
-            );
-          } else {
-            this.$message({
-              message: "博主没有其他博客",
-              type: "info",
-            });
-          }
-          break;
-        default:
-          if (/#webSites-\d+/.test(index)) {
-            let i = parseInt(index.split("-")[1]);
-            let url = this.webSites[i].url;
-            window.open((url.match(/https?:\/\//i) ? "" : "https://") + url);
-          }
-          break;
-      }
-    },
-  },
+  methods: {},
 };
 </script>
 
 <style>
+.header {
+  position: relative;
+  height: 6rem;
+  z-index: 10;
+}
+.header.sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+.header > .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+.home-link {
+  text-decoration: none;
+}
+.logo {
+  height: 1.5rem;
+}
+.site-name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.nav > .nav__link {
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  margin-top: 4px;
+  margin-right: 3rem;
+  padding-bottom: 4px;
+  border-bottom: 1px solid;
+  border-color: transparent;
+  transition: border 0.15s;
+}
+.nav > :last-of-type {
+  margin: 0;
+}
+.nav > .active,
+.nav > :hover {
+  border-color: inherit;
+}
+.footer {
+  font-size: 0.8rem;
+  padding: 6rem 0;
+}
+* {
+  box-sizing: border-box;
+}
 body {
-  font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
+  --color-base: #fff;
+  --color-base-1: #f3f3f3;
+  --color-contrast: #000;
+  --color-contrast-1: #2b2b2b;
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, Segoe UI, Roboto,
+    Helvetica Neue, Arial, sans-serif;
   margin: 0;
   padding: 0;
-  /* line-height: 1.5; */
+  font-size: 16px;
+  background: var(--color-base);
+  color: var(--color-contrast);
+  transition: background 0.5s ease;
 }
-
-.page-header {
-  padding: 5rem 6rem;
-  color: #fff;
-  text-align: center;
-  background-color: #159957;
-  background-image: linear-gradient(120deg, #155799, #159957);
+body.dark {
+  --color-base: #000;
+  --color-base-1: #2b2b2b;
+  --color-contrast: #fff;
+  --color-contrast-1: #f3f3f3;
 }
-
-.project-name {
-  font-size: 3.25rem;
-  margin-top: 0;
-  margin-bottom: 0.1rem;
+h1 {
+  letter-spacing: -0.01em;
 }
-
-.project-tagline {
-  font-size: 1.25rem;
-  margin-bottom: 2rem;
-  font-weight: normal;
+.layout {
+  padding: 0;
+}
+.layout.sticky-header {
+  padding: 6rem 0 0;
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+@media (min-width: 860px) {
+  .container {
+    padding: 0 6rem;
+  }
+}
+a {
+  color: inherit;
+}
+img {
+  max-width: 100%;
+}
+.label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #000;
+  background: none;
+  font-family: Space Mono, SFMono-Regular, Menlo, Monaco, Consolas,
+    Liberation Mono, Courier New, monospace;
+  font-size: 0.9rem;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+  -webkit-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+code[class*="language-"]::-moz-selection,
+code[class*="language-"] ::-moz-selection,
+pre[class*="language-"]::-moz-selection,
+pre[class*="language-"] ::-moz-selection {
+  text-shadow: none;
+  background: var(--color-base-1);
+}
+code[class*="language-"]::selection,
+code[class*="language-"] ::selection,
+pre[class*="language-"]::selection,
+pre[class*="language-"] ::selection {
+  text-shadow: none;
+  background: var(--color-base-1);
+}
+@media print {
+  code[class*="language-"],
+  pre[class*="language-"] {
+    text-shadow: none;
+  }
+}
+pre[class*="language-"] {
+  padding: 1em;
+  margin: 0.5em 0;
+  overflow: auto;
+}
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+  background: var(--color-base-1);
+}
+:not(pre) > code[class*="language-"] {
+  padding: 0.1em;
+  border-radius: 0.3em;
+  white-space: normal;
+}
+.token.cdata,
+.token.comment,
+.token.doctype,
+.token.prolog {
+  color: #708090;
+}
+.token.punctuation {
+  color: #999;
+}
+.namespace {
   opacity: 0.7;
 }
-
-.btn:hover {
-  color: rgba(255, 255, 255, 0.8);
+.token.boolean,
+.token.constant,
+.token.deleted,
+.token.number,
+.token.property,
+.token.symbol,
+.token.tag {
+  color: #905;
+}
+.token.attr-name,
+.token.builtin,
+.token.char,
+.token.inserted,
+.token.selector,
+.token.string {
+  color: #690;
+}
+.language-css .token.string,
+.style .token.string,
+.token.entity,
+.token.operator,
+.token.url {
+  color: #a67f59;
+  background: hsla(0, 0%, 100%, 0.5);
+}
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #07a;
+}
+.token.function {
+  color: #dd4a68;
+}
+.token.important,
+.token.regex,
+.token.variable {
+  color: #e90;
+}
+.token.bold,
+.token.important {
+  font-weight: 700;
+}
+.token.italic {
+  font-style: italic;
+}
+.token.entity {
+  cursor: help;
+}
+.project-header {
+  padding: 20vh 0 4rem;
+}
+.project-title {
+  font-size: 4rem;
+  margin: 0 0 4rem;
+  padding: 0;
+}
+.project-info {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.8rem;
+}
+.project-info > div {
+  margin-right: 4rem;
+}
+.project-info > div:last-of-type {
+  margin: 0;
+}
+.category:after {
+  content: ", ";
+}
+.category:last-of-type:after {
+  content: "";
+}
+p {
+  line-height: 1.5;
+  font-size: 1.15rem;
+}
+h2 {
+  font-size: 2rem;
+}
+h3 {
+  font-size: 1.5rem;
+}
+h4,
+h5,
+h6 {
+  font-size: 1.15rem;
+}
+.journal-container {
+  max-width: 840px;
+}
+.journal-header {
+  padding: 2rem 0 4rem;
+}
+.journal-title {
+  font-size: 4rem;
+  margin: 0 0 4rem;
+  padding: 0;
+}
+.journal-meta {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.8rem;
+}
+.journal-meta > div {
+  margin-right: 4rem;
+}
+.journal-meta > div:last-of-type {
+  margin: 0;
+}
+.container.journal {
+  max-width: 720px;
+}
+.journal-hero {
+  padding: 4rem 0;
+  text-align: center;
+  color: var(--color-base-1);
+}
+.journal-header {
+  font-size: 3rem;
+  font-weight: 700;
+  padding: 0;
+  margin: 0;
+}
+.journal-post {
+  display: block;
+  padding: 2rem 0;
   text-decoration: none;
-  background-color: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.3);
+  transition: background 0.5s ease;
 }
-
-a:hover {
-  text-decoration: underline;
+.journal-post > {
+  transition: transform 0.5s ease;
 }
-
-a:active,
-a:hover {
-  outline: 0;
+.journal-post:hover {
+  background-color: var(--color-base-1);
 }
-
-.btn {
-  padding: 0.75rem 1rem;
-  display: inline-block;
-  margin-bottom: 1rem;
-  color: rgba(255, 255, 255, 0.7);
-  background-color: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.2);
-  border-style: solid;
-  border-width: 1px;
+.journal-post:hover > {
+  transform: translateX(4rem);
+}
+.journal-post h1,
+.journal-post h2 {
+  margin: 0;
+  padding: 0;
+}
+.journal-title {
+  font-size: 2rem;
+  color: var(--color-contrast);
+}
+.journal-excerpt {
+  color: var(--color-contrast-1);
+}
+@media (min-width: 560px) {
+  .journal-post {
+    padding: 3rem 0;
+  }
+}
+@media (min-width: 860px) {
+  .journal-post {
+    padding: 5rem 0;
+  }
+}
+.contact-header {
+  padding: 2rem 0 4rem;
+}
+.contact-title {
+  font-size: 4rem;
+  margin: 0 0 4rem;
+  padding: 0;
+}
+.sender-info {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+.sender-info > div {
+  flex: 1;
+  margin-right: 4rem;
+}
+.sender-info > div:last-of-type {
+  margin: 0;
+}
+input:focus,
+textarea:focus {
+  border-color: var(--color-contrast-1);
+}
+input,
+textarea {
+  background: transparent;
+  border: 1px solid var(--color-base-1);
+  outline: none;
   border-radius: 0.3rem;
-  transition: color 0.2s, background-color 0.2s, border-color 0.2s;
+  padding: 0.8rem 1rem;
+  color: inherit;
+  font-size: 1rem;
+  width: 100%;
 }
-
-a {
-  color: #1e6bb8;
+textarea {
+  resize: none;
+  height: 140px;
+}
+.button {
+  color: var(--color-base);
+  background: var(--color-contrast);
+  outline: none;
+  border: 0;
+  font-size: 0.8rem;
+  padding: 0.8rem 1.6rem;
+  border-radius: 0.3rem;
+  margin-top: 2rem;
+  cursor: pointer;
+  transition: opacity 0.25s ease;
+  font-size: 500;
+  letter-spacing: 0.035em;
+}
+.button:hover {
+  opacity: 0.6;
+}
+.button:focus {
+  border: 1px solid var(--color-base-1);
+}
+.hero {
+  text-align: center;
+  width: 480px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 4rem 0 8rem;
+}
+.hero-title {
+  font-size: 3rem;
+  font-weight: 700;
+  padding: 0;
+  margin: 0 0 2rem;
+}
+.hero-subtitle,
+.hero-subtitle p,
+.hero-title p {
+  margin: 0;
+  padding: 0;
+}
+.hero-subtitle {
+  font-size: 1.15em;
+  font-weight: 400;
+  line-height: 1.68;
+  opacity: 0.6;
+}
+.projects {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 4rem;
+}
+.project {
+  grid-column: auto/span 2;
+  text-align: center;
+}
+.project-link {
   text-decoration: none;
 }
-
-.btn + .btn {
-  margin-left: 1rem;
+.thumbnail {
+  height: 560px;
+  -o-object-fit: cover;
+  object-fit: cover;
+  transition: all 0.15s ease;
+  box-shadow: 0 0 40px -20px rgba(0, 0, 0, 0.25);
 }
-
-.main-content {
-  max-width: 64rem;
-  padding: 30px 0px 30px 0px;
-  margin: 0 auto;
-  font-size: 1.1rem;
-  word-wrap: break-word;
-  min-height: 800px;
+.project-title {
+  font-size: 1rem;
+  color: var(--color-contrast);
+  margin: 2rem 0 1rem;
 }
-
-.foot {
-  max-width: 67rem;
-  margin: 0 auto;
-  font-size: 12px !important;
-  color: #586069 !important;
-  word-wrap: break-word;
+.categories {
+  font-size: 0.8rem;
+  color: var(--color-contrast-1);
+}
+.category {
+  margin-right: 0.8rem;
+}
+.category:last-of-type {
+  margin: 0;
+}
+.project:hover .thumbnail {
+  transform: scale(1.02);
+  box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.25);
+}
+@media (min-width: 920px) {
+  .project {
+    grid-column: auto/span 1;
+  }
+  .project:nth-child(3n + 1) {
+    grid-column: auto/span 2;
+  }
+}
+.latest-journals-heading {
+  margin-top: 6rem;
+  margin-bottom: 1rem;
+  font-size: 0.6rem;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+.latest-journals {
+  max-width: 100%;
+  margin: 0 2rem;
+  border: 1px solid var(--color-base-1);
+}
+.latest-journals > .container {
+  display: flex;
+  flex-wrap: wrap;
+}
+.journal {
+  flex: 0 0 100%;
+  display: block;
+  padding: 2rem;
+  transition: background 0.25s ease;
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-base-1);
+}
+.journal:last-of-type {
+  border-bottom: 0;
+}
+.journal:hover {
+  background: var(--color-base-1);
+}
+.journal-title {
+  font-size: 1rem;
+  line-height: 1.35;
+}
+@media (min-width: 580px) {
+  .journal {
+    flex: 0 0 50%;
+  }
+  .journal:first-child {
+    border-right: 1px solid var(--color-base-1);
+  }
+  .journal:first-child,
+  .journal:nth-child(2) {
+    border-bottom: 1px solid var(--color-base-1);
+  }
+  .journal:nth-child(3) {
+    border-right: 1px solid var(--color-base-1);
+    border-bottom: 0;
+  }
+}
+@media (min-width: 920px) {
+  .journal {
+    flex: 0 0 25%;
+  }
+  .journal:first-child,
+  .journal:nth-child(2),
+  .journal:nth-child(3) {
+    border: 0;
+    border-right: 1px solid var(--color-base-1);
+  }
+  .latest-journals {
+    margin: 0;
+    border-left: 0;
+    border-right: 0;
+    border-top: 1px solid var(--color-base-1);
+    border-bottom: 1px solid var(--color-base-1);
+  }
 }
 </style>

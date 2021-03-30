@@ -10,14 +10,25 @@ module.exports = function (api) {
   api.loadSource(async ({ addCollection }) => {
     // Use the Data Store API here: https://gridsome.org/docs/data-store-api/
     const collection = addCollection('Post')
-
-    const { data } = await axios.get('https://jsonplaceholder.typicode.com/posts')
-
-    for (const item of data) {
+    const cards = addCollection('Card')
+    const { data } = await axios.get('https://gridsome-forestry.netlify.app/assets/data/index.json')
+   console.table(data.data)
+    for (const item of data.data.projects.edges) {
+      let node = item.node;
       collection.addNode({
-        id: item.id,
-        title: item.title,
-        content: item.body
+        id: node.id,
+        title: node.title,
+        date: node.date,
+        categories: node.categories,
+        path: node.path
+      })
+    }
+    for (const item of data.data.journals.edges) {
+      let node = item.node;
+      cards.addNode({
+        id: node.id,
+        title: node.title,
+        path: node.path
       })
     }
   })
