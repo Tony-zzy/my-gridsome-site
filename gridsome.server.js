@@ -12,18 +12,24 @@ module.exports = function (api) {
     const collection = addCollection('Post')
     const cards = addCollection('Card')
     const { data } = await axios.get('https://gridsome-forestry.netlify.app/assets/data/index.json')
-   console.table(data.data)
-    for (const item of data.data.projects.edges) {
+
+    for (const item of data.data.projects.edges.reverse()) {
       let node = item.node;
+  
       collection.addNode({
         id: node.id,
         title: node.title,
         date: node.date,
         categories: node.categories,
+        imgs: {
+          src: node.thumbnail.src,
+          size:node.thumbnail.size
+        },
         path: node.path
       })
     }
-    for (const item of data.data.journals.edges) {
+
+    for (const item of data.data.journals.edges.reverse()) {
       let node = item.node;
       cards.addNode({
         id: node.id,
@@ -31,6 +37,7 @@ module.exports = function (api) {
         path: node.path
       })
     }
+
   })
 
   api.createPages(({ createPage }) => {

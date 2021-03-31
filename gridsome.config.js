@@ -9,11 +9,11 @@ module.exports = {
   siteDescription: "zzy",
   plugins: [],
   templates: {
-    Post: [
-      {
-        path: '/posts/:id',
-        component: './src/templates/Post.vue'
-      }
-    ]
+    // Post: [
+    //   {
+    //     path: '/posts/:id',
+    //     component: './src/templates/Post.vue'
+    //   }
+    // ]
   }
 }
