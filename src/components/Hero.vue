@@ -2,7 +2,7 @@
   <div class="hero">
     <h1 class="hero-title">ZZY</h1>
     <h2 class="hero-subtitle">
-    subHead
+      https://github.com/Tony-zzy/my-gridsome-site.git
     </h2>
   </div>
 </template>
